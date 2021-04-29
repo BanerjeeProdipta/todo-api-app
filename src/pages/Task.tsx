@@ -29,7 +29,7 @@ const Task = () => {
     <div className="mx-auto flex justify-center py-8 px-6">
       <div>
         <form onSubmit={handleSubmit} className="mb-8 border rounded shadow-sm px-6 py-4 space-y-4">
-          <p className="text-2xl text-indigo-700 font-bold px-4 py-2 w-full">Add Task</p>
+          <p className="text-2xl text-indigo-700 font-bold py-2 w-full">Add Task</p>
           <input
             className="border border-blue px-4 py-2 rounded w-full"
             type="text"
