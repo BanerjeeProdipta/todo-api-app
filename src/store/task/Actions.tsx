@@ -1,6 +1,6 @@
-import { ITask } from './Reducer';
+import { IAddTask } from './Reducer';
 import { ACTION_TYPES } from './Types';
 
-export const addTaskAction = (payload: ITask[]) => {
+export const addTask = (payload: IAddTask) => {
   return { type: ACTION_TYPES.ADD_TASK, payload };
 };
