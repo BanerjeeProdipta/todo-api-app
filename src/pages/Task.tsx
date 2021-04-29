@@ -45,10 +45,12 @@ const Task = () => {
             onChange={handleArticleData}
           />
           <button
-            className="rounded-lg px-4 py-1 bg-indigo-800 text-white"
+            className={`rounded-lg px-4 py-2 bg-indigo-800 text-white w-full flex justify-center ${
+              task === undefined && 'opacity-60 cursor-not-allowed'
+            }`}
             disabled={task === undefined ? true : false}
           >
-            Add Task
+            Save
           </button>
         </form>
 
