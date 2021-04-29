@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IReducer } from '../store/IndexReducer';
-import { addTask } from '../store/task/Actions';
-import { IAddTask, ITask } from '../store/task/Reducer';
+import { addTask, removeTask } from '../store/task/Actions';
+import { IAddTask, ITask } from '../types';
 
 const Task = () => {
   const dispatch = useDispatch();
@@ -10,15 +10,19 @@ const Task = () => {
 
   const tasks: ITask[] = useSelector((state: IReducer) => state.taskReducer.task);
 
-  const handleSubmit = () => {
-    if (task !== undefined) dispatch(addTask(task));
-  };
-
   const handleArticleData = (e: React.FormEvent<HTMLInputElement>) => {
     setTask({
       ...task,
       [e.currentTarget.id]: e.currentTarget.value,
     });
+  };
+
+  const handleSubmit = () => {
+    if (task !== undefined) dispatch(addTask(task));
+  };
+
+  const deleteTask = (task: ITask) => {
+    if (task !== undefined) dispatch(removeTask(task));
   };
 
   return (
@@ -51,8 +55,12 @@ const Task = () => {
         <div className="space-y-4">
           {tasks.map((task: ITask) => (
             <div key={task.id}>
+              <p>{task.id}</p>
               <p className="text-2xl font-semibold text-indigo-700 mb-2">{task.title}</p>
               <p>{task.body}</p>
+              <button onClick={() => deleteTask(task)} className="bg-red-600 rounded text-xs text-white px-2 py-1">
+                delete
+              </button>
             </div>
           ))}
         </div>

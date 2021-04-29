@@ -1,17 +1,7 @@
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { ITask } from '../../types';
 import { ACTION_TYPES } from './Types';
-
-export interface ITask {
-  id: number;
-  title: string;
-  body: string;
-}
-
-export interface IAddTask {
-  title?: string;
-  body?: string;
-}
 
 interface ITaskReducer {
   task: ITask[];
@@ -38,7 +28,6 @@ const addTask = (state: ITaskReducer, action: any): ITaskReducer => {
     title: action.payload.title,
     body: action.payload.body,
   };
-  console.log(taskReducer.length);
   console.log(newTask);
   return {
     ...state,
@@ -47,16 +36,12 @@ const addTask = (state: ITaskReducer, action: any): ITaskReducer => {
 };
 
 const removeTask = (state: ITaskReducer, action: any): ITaskReducer => {
-  const newTask: ITask = {
-    id: Math.random(),
-    title: action.payload.title,
-    body: action.payload.body,
-  };
-  console.log(taskReducer.length);
-  console.log(newTask);
+  const tasks: ITask[] = state.task.filter((task) => task.id !== action.payload.id);
+  console.log('[tasks', tasks);
+  console.log('[id', action.payload.id);
   return {
     ...state,
-    task: state.task.concat(newTask),
+    task: tasks,
   };
 };
 
@@ -73,9 +58,9 @@ const Reducer = (state = InitialState, action: any) => {
   }
 };
 
-// persister for QuestionReducer
+// persister
 const persistConfig = {
-  key: 'questionReducer',
+  key: 'tasks',
   storage: storage,
 };
 
