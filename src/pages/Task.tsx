@@ -54,7 +54,6 @@ const Task = () => {
   };
 
   const handleCancel = () => {
-    console.log('what');
     setTaskEditFormVisibility(false);
     setTitle('');
     setBody('');
