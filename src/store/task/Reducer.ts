@@ -54,13 +54,14 @@ const changeCompletionStatus = (state: ITaskReducer, action: any): ITaskReducer 
   let index = -1;
   for (let i = 0; i < tasks.length; i++) {
     index++;
-    if (state.task[i].id == action.payload.id) {
-      break;
+    if (state.task[i].id === action.payload.id) {
+      state.task[i].completionStatus = action.payload.completionStatus;
     }
   }
-  if (index != -1) {
+  if (index !== -1) {
     tasks[index] = action.payload;
   }
+  console.log(tasks);
   return {
     ...state,
     task: tasks,

@@ -17,7 +17,8 @@ const Task = () => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
     if (task !== undefined) dispatch(addTask(task));
   };
 
@@ -56,6 +57,7 @@ const Task = () => {
               task === undefined && 'opacity-60 cursor-not-allowed'
             }`}
             disabled={task === undefined ? true : false}
+            type="submit"
           >
             Save
           </button>
