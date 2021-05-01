@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IReducer } from '../store/IndexReducer';
 import { addTask, changeCompletionStatus, removeTask } from '../store/task/Actions';
@@ -6,23 +6,30 @@ import { IAddTask, ITask } from '../types';
 
 const Task = () => {
   const dispatch = useDispatch();
-  const [task, setTask] = React.useState<IAddTask>();
-  console.log(task);
+  const [task, setTask] = useState<IAddTask>();
+  const [title, setTitle] = useState<string>('');
+  const [body, setBody] = useState<string>('');
 
   const tasks: ITask[] = useSelector((state: IReducer) => state.taskReducer.task);
 
-  const handleTaskData = (e: React.FormEvent<HTMLInputElement>) => {
-    setTask({
-      ...task,
-      [e.currentTarget.id]: e.currentTarget.value,
-    });
-  };
-
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
+
     if (task !== undefined) dispatch(addTask(task));
-    setTask({});
+    setTitle('');
+    setBody('');
   };
+
+  const todo = useCallback(() => {
+    setTask({
+      title: title,
+      body: body,
+    });
+  }, [title, body]);
+
+  useEffect(() => {
+    todo();
+  }, [todo]);
 
   const deleteTask = (task: ITask) => {
     if (task !== undefined) dispatch(removeTask(task));
@@ -44,23 +51,19 @@ const Task = () => {
             className="border border-blue px-4 py-2 rounded w-full"
             type="text"
             id="title"
+            value={title}
             placeholder="Title"
-            onChange={handleTaskData}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <input
             className="border border-blue px-4 py-2 rounded w-full"
             type="text"
             id="body"
+            value={body}
             placeholder="Description"
-            onChange={handleTaskData}
+            onChange={(e) => setBody(e.target.value)}
           />
-          <button
-            className={`rounded-lg px-4 py-2 bg-indigo-800 text-white w-full flex justify-center ${
-              task === undefined && 'opacity-60 cursor-not-allowed'
-            }`}
-            disabled={task === undefined ? true : false}
-            type="submit"
-          >
+          <button className={`rounded px-4 py-2 bg-indigo-800 text-white w-full flex justify-center`} type="submit">
             Save
           </button>
         </form>

@@ -6,6 +6,6 @@ export interface ITask {
 }
 
 export interface IAddTask {
-  title?: string;
-  body?: string;
+  title: string;
+  body: string;
 }
