@@ -14,6 +14,8 @@ const Task = () => {
 
   const tasks: ITask[] = useSelector((state: IReducer) => state.taskReducer.task);
 
+  console.log(task);
+
   const todo = useCallback(() => {
     setTask({
       title: title,
@@ -47,6 +49,15 @@ const Task = () => {
   const editTask = (task: ITask) => {
     setTaskEditFormVisibility(true);
     setTaskToEdit(task);
+    setTitle(task.title);
+    setBody(task.body);
+  };
+
+  const handleCancel = () => {
+    console.log('what');
+    setTaskEditFormVisibility(false);
+    setTitle('');
+    setBody('');
   };
 
   const handleChangeCompletionStatus = (task: ITask) => {
@@ -115,8 +126,7 @@ const Task = () => {
             </button>
             <button
               className={`rounded px-4 py-2 bg-indigo-800 text-white w-full flex justify-center mt-2`}
-              onClick={(e) => setTaskEditFormVisibility(false)}
-              type="submit"
+              onClick={handleCancel}
             >
               Cancel
             </button>
