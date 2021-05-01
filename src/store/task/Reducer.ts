@@ -52,13 +52,13 @@ const updateTask = (state: ITaskReducer, action: any): ITaskReducer => {
 
   const allTask = tasks.map((v) => {
     if (v.id === action.payload.id) {
+      console.log(action.payload);
       v.title = action.payload.title;
       v.body = action.payload.body;
     }
     return v;
   });
 
-  console.log(allTask);
   return {
     ...state,
     task: allTask,

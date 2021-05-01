@@ -9,3 +9,9 @@ export interface IAddTask {
   title: string;
   body: string;
 }
+
+export interface IUpdateTask {
+  id: string;
+  title: string;
+  body: string;
+}

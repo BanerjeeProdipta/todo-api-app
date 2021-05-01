@@ -2,42 +2,54 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IReducer } from '../store/IndexReducer';
 import { addTask, changeCompletionStatus, removeTask, updateTask } from '../store/task/Actions';
-import { IAddTask, ITask } from '../types';
+import { IAddTask, ITask, IUpdateTask } from '../types';
 
 const Task = () => {
   const dispatch = useDispatch();
-  const [task, setTask] = useState<IAddTask>();
+  const [taskToAdd, setTaskToAdd] = useState<IAddTask>();
+  const [id, setId] = useState<string>('');
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
-  const [taskToEdit, setTaskToEdit] = useState<IAddTask>();
+  const [taskToEdit, setTaskToEdit] = useState<IUpdateTask>();
   const [taskEditFormVisibility, setTaskEditFormVisibility] = useState<boolean>(false);
 
   const tasks: ITask[] = useSelector((state: IReducer) => state.taskReducer.task);
 
-  console.log(task);
-
-  const todo = useCallback(() => {
-    setTask({
+  const addTodo = useCallback(() => {
+    setTaskToAdd({
       title: title,
       body: body,
     });
   }, [title, body]);
 
   useEffect(() => {
-    todo();
-  }, [todo]);
+    addTodo();
+  }, [addTodo]);
 
   const handleAddTaskFromSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
-    if (task !== undefined) dispatch(addTask(task));
+    if (taskToAdd !== undefined) dispatch(addTask(taskToAdd));
     setTitle('');
     setBody('');
   };
 
+  const editTodo = useCallback(() => {
+    setTaskToEdit({
+      id: id,
+      title: title,
+      body: body,
+    });
+  }, [title, body]);
+
+  useEffect(() => {
+    editTodo();
+  }, [editTodo]);
+
   const handleEditTaskFromSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    if (task !== undefined) dispatch(updateTask(task));
+
+    if (taskToEdit !== undefined) dispatch(updateTask(taskToEdit));
     setTitle('');
     setBody('');
   };
@@ -49,6 +61,7 @@ const Task = () => {
   const editTask = (task: ITask) => {
     setTaskEditFormVisibility(true);
     setTaskToEdit(task);
+    setId(task.id);
     setTitle(task.title);
     setBody(task.body);
   };
