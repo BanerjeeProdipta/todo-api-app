@@ -6,7 +6,8 @@ import { IAddTask, ITask } from '../types';
 
 const Task = () => {
   const dispatch = useDispatch();
-  const [task, setTask] = React.useState<IAddTask | {}>();
+  const [task, setTask] = React.useState<IAddTask>();
+  console.log(task);
 
   const tasks: ITask[] = useSelector((state: IReducer) => state.taskReducer.task);
 
@@ -20,6 +21,7 @@ const Task = () => {
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
     if (task !== undefined) dispatch(addTask(task));
+    setTask({});
   };
 
   const deleteTask = (task: ITask) => {
