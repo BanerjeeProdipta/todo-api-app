@@ -49,6 +49,24 @@ const removeTask = (state: ITaskReducer, action: any): ITaskReducer => {
   };
 };
 
+const updateTask = (state: ITaskReducer, action: any): ITaskReducer => {
+  const tasks: ITask[] = state.task;
+
+  const allTask = tasks.map((v) => {
+    if (v.id === action.payload.id) {
+      v.title = action.payload.title;
+      v.body = action.payload.body;
+    }
+    return v;
+  });
+
+  console.log(allTask);
+  return {
+    ...state,
+    task: allTask,
+  };
+};
+
 const changeCompletionStatus = (state: ITaskReducer, action: any): ITaskReducer => {
   const tasks: ITask[] = state.task;
 
@@ -76,6 +94,9 @@ const Reducer = (state = InitialState, action: any) => {
 
     case ACTION_TYPES.CHANGE_COMPLETION_STATUS:
       return changeCompletionStatus(state, action);
+
+    case ACTION_TYPES.UPDATE_TASK:
+      return updateTask(state, action);
 
     default:
       return state;
