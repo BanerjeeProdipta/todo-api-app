@@ -56,7 +56,7 @@ const changeCompletionStatus = (state: ITaskReducer, action: any): ITaskReducer 
   for (let i = 0; i < tasks.length; i++) {
     index++;
     if (state.task[i].id === action.payload.id) {
-      state.task[i].completionStatus = action.payload.completionStatus;
+      break;
     }
   }
   if (index !== -1) {
