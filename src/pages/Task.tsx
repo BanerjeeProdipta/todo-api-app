@@ -73,7 +73,7 @@ const Task = () => {
             <div key={task.id}>
               <div className="flex items-center">
                 <input
-                  className="h-5"
+                  className="h-4 w-4 mb-2"
                   type="checkbox"
                   id="completionStatus"
                   value={task.id}

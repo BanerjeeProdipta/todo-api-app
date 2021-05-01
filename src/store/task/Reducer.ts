@@ -61,7 +61,7 @@ const changeCompletionStatus = (state: ITaskReducer, action: any): ITaskReducer 
 
   console.log(allTask);
   return {
-    ...state.task,
+    ...state,
     task: allTask,
   };
 };
