@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IReducer } from '../store/IndexReducer';
-import { addTask, removeTask } from '../store/task/Actions';
+import { addTask, changeCompletionStatus, removeTask } from '../store/task/Actions';
 import { IAddTask, ITask } from '../types';
 
 const Task = () => {
@@ -23,6 +23,13 @@ const Task = () => {
 
   const deleteTask = (task: ITask) => {
     if (task !== undefined) dispatch(removeTask(task));
+  };
+
+  const handleChangeCompletionStatus = (task: ITask) => {
+    if (task.completionStatus === true) {
+      task.completionStatus = false;
+    } else task.completionStatus = true;
+    dispatch(changeCompletionStatus(task));
   };
 
   return (
@@ -57,8 +64,16 @@ const Task = () => {
         <div className="space-y-4">
           {tasks.map((task: ITask) => (
             <div key={task.id}>
-              <p>{task.id}</p>
-              <p className="text-2xl font-semibold text-indigo-700 mb-2">{task.title}</p>
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="completionStatus"
+                  value={task.id}
+                  onClick={() => handleChangeCompletionStatus(task)}
+                  defaultChecked={task.completionStatus === true}
+                ></input>
+                <p className="text-2xl font-semibold text-indigo-700 mb-2 ml-2">{task.title}</p>
+              </div>
               <p>{task.body}</p>
               <button onClick={() => deleteTask(task)} className="bg-red-600 rounded text-xs text-white px-2 py-1">
                 delete

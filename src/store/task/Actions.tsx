@@ -7,3 +7,6 @@ export const addTask = (payload: IAddTask) => {
 export const removeTask = (payload: ITask) => {
   return { type: ACTION_TYPES.REMOVE_TASK, payload };
 };
+export const changeCompletionStatus = (payload: ITask) => {
+  return { type: ACTION_TYPES.CHANGE_COMPLETION_STATUS, payload };
+};

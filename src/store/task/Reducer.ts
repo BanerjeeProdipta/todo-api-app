@@ -11,11 +11,13 @@ const InitialState: ITaskReducer = {
   task: [
     {
       id: 1,
+      completionStatus: false,
       title: 'Post 1',
       body: 'Quisque cursus, metus vitae pharetra Nam libero tempore, cum soluta nobis est eligendi',
     },
     {
       id: 2,
+      completionStatus: true,
       title: 'Post 2',
       body: 'Harum quidem rerum facilis est et expedita distinctio quas molestias excepturi sint',
     },
@@ -25,9 +27,11 @@ const InitialState: ITaskReducer = {
 const addTask = (state: ITaskReducer, action: any): ITaskReducer => {
   const newTask: ITask = {
     id: Math.random(),
+    completionStatus: false,
     title: action.payload.title,
     body: action.payload.body,
   };
+
   console.log(newTask);
   return {
     ...state,
@@ -37,11 +41,25 @@ const addTask = (state: ITaskReducer, action: any): ITaskReducer => {
 
 const removeTask = (state: ITaskReducer, action: any): ITaskReducer => {
   const tasks: ITask[] = state.task.filter((task) => task.id !== action.payload.id);
-  console.log('[tasks', tasks);
-  console.log('[id', action.payload.id);
+  console.log('[tasks]', tasks);
+  console.log('[id]', action.payload.id);
   return {
     ...state,
     task: tasks,
+  };
+};
+
+const changeCompletionStatus = (state: ITaskReducer, action: any): ITaskReducer => {
+  const tasks: ITask[] = state.task.filter((task) => task.id !== action.payload.id);
+  const completionStatusChangedTask: ITask = {
+    id: action.payload.id,
+    completionStatus: action.payload.completionStatus,
+    title: action.payload.title,
+    body: action.payload.body,
+  };
+  return {
+    ...state,
+    task: tasks.concat(completionStatusChangedTask),
   };
 };
 
@@ -52,6 +70,9 @@ const Reducer = (state = InitialState, action: any) => {
 
     case ACTION_TYPES.REMOVE_TASK:
       return removeTask(state, action);
+
+    case ACTION_TYPES.CHANGE_COMPLETION_STATUS:
+      return changeCompletionStatus(state, action);
 
     default:
       return state;
