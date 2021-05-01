@@ -10,7 +10,7 @@ const Task = () => {
 
   const tasks: ITask[] = useSelector((state: IReducer) => state.taskReducer.task);
 
-  const handleArticleData = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleTaskData = (e: React.FormEvent<HTMLInputElement>) => {
     setTask({
       ...task,
       [e.currentTarget.id]: e.currentTarget.value,
@@ -42,14 +42,14 @@ const Task = () => {
             type="text"
             id="title"
             placeholder="Title"
-            onChange={handleArticleData}
+            onChange={handleTaskData}
           />
           <input
             className="border border-blue px-4 py-2 rounded w-full"
             type="text"
             id="body"
             placeholder="Description"
-            onChange={handleArticleData}
+            onChange={handleTaskData}
           />
           <button
             className={`rounded-lg px-4 py-2 bg-indigo-800 text-white w-full flex justify-center ${
