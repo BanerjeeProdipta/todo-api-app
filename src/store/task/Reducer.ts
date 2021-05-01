@@ -50,16 +50,20 @@ const removeTask = (state: ITaskReducer, action: any): ITaskReducer => {
 };
 
 const changeCompletionStatus = (state: ITaskReducer, action: any): ITaskReducer => {
-  const tasks: ITask[] = state.task.filter((task) => task.id !== action.payload.id);
-  const completionStatusChangedTask: ITask = {
-    id: action.payload.id,
-    completionStatus: action.payload.completionStatus,
-    title: action.payload.title,
-    body: action.payload.body,
-  };
+  const tasks: ITask[] = state.task;
+  let index = -1;
+  for (let i = 0; i < tasks.length; i++) {
+    index++;
+    if (state.task[i].id == action.payload.id) {
+      break;
+    }
+  }
+  if (index != -1) {
+    tasks[index] = action.payload;
+  }
   return {
     ...state,
-    task: tasks.concat(completionStatusChangedTask),
+    task: tasks,
   };
 };
 
