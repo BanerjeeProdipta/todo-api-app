@@ -14,8 +14,16 @@ const Task = () => {
 
   const tasks: ITask[] = useSelector((state: IReducer) => state.taskReducer.task);
 
-  console.log(title, body);
-  console.log('[task]', task);
+  const todo = useCallback(() => {
+    setTask({
+      title: title,
+      body: body,
+    });
+  }, [title, body]);
+
+  useEffect(() => {
+    todo();
+  }, [todo]);
 
   const handleAddTaskFromSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -32,17 +40,6 @@ const Task = () => {
     setBody('');
   };
 
-  const todo = useCallback(() => {
-    setTask({
-      title: title,
-      body: body,
-    });
-  }, [title, body]);
-
-  useEffect(() => {
-    todo();
-  }, [todo]);
-
   const deleteTask = (task: ITask) => {
     if (task !== undefined) dispatch(removeTask(task));
   };
@@ -50,10 +47,6 @@ const Task = () => {
   const editTask = (task: ITask) => {
     setTaskEditFormVisibility(true);
     setTaskToEdit(task);
-    setTask({
-      title: task.title,
-      body: task.body,
-    });
   };
 
   const handleChangeCompletionStatus = (task: ITask) => {
@@ -105,7 +98,7 @@ const Task = () => {
               className="border border-blue px-4 py-2 rounded w-full"
               type="text"
               id="title"
-              defaultValue={!!taskToEdit ? taskToEdit.title : ''}
+              defaultValue={taskToEdit?.title}
               placeholder="Title"
               onChange={(e) => setTitle(e.target.value)}
             />
@@ -113,12 +106,19 @@ const Task = () => {
               className="border border-blue px-4 py-2 rounded w-full"
               type="text"
               id="body"
-              defaultValue={!!taskToEdit ? taskToEdit.body : ''}
+              defaultValue={taskToEdit?.body}
               placeholder="Description"
               onChange={(e) => setBody(e.target.value)}
             />
             <button className={`rounded px-4 py-2 bg-indigo-800 text-white w-full flex justify-center`} type="submit">
               Update
+            </button>
+            <button
+              className={`rounded px-4 py-2 bg-indigo-800 text-white w-full flex justify-center mt-2`}
+              onClick={(e) => setTaskEditFormVisibility(false)}
+              type="submit"
+            >
+              Cancel
             </button>
           </form>
         )}

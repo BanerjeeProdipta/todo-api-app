@@ -41,8 +41,6 @@ const addTask = (state: ITaskReducer, action: any): ITaskReducer => {
 
 const removeTask = (state: ITaskReducer, action: any): ITaskReducer => {
   const tasks: ITask[] = state.task.filter((task) => task.id !== action.payload.id);
-  console.log('[tasks]', tasks);
-  console.log('[id]', action.payload.id);
   return {
     ...state,
     task: tasks,
@@ -77,7 +75,6 @@ const changeCompletionStatus = (state: ITaskReducer, action: any): ITaskReducer 
     return v;
   });
 
-  console.log(allTask);
   return {
     ...state,
     task: allTask,
