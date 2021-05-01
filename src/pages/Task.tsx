@@ -73,18 +73,23 @@ const Task = () => {
             <div key={task.id}>
               <div className="flex items-center">
                 <input
+                  className="h-5"
                   type="checkbox"
                   id="completionStatus"
                   value={task.id}
-                  onClick={() => handleChangeCompletionStatus(task)}
+                  onChange={() => handleChangeCompletionStatus(task)}
                   defaultChecked={task.completionStatus === true}
                 ></input>
                 <p className="text-2xl font-semibold text-indigo-700 mb-2 ml-2">{task.title}</p>
               </div>
               <p>{task.body}</p>
-              <button onClick={() => deleteTask(task)} className="bg-red-600 rounded text-xs text-white px-2 py-1">
-                delete
-              </button>
+              <div className="space-x-2 mt-4">
+                <button className="bg-green-600 rounded text-xs text-white px-2 py-1">Edit</button>
+
+                <button onClick={() => deleteTask(task)} className="bg-red-600 rounded text-xs text-white px-2 py-1">
+                  delete
+                </button>
+              </div>
             </div>
           ))}
         </div>
