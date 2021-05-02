@@ -104,9 +104,7 @@ const Task = () => {
             />
             <button
               className={`rounded px-4 py-2 bg-indigo-800 text-white w-full flex justify-center ${
-                !!title && !!body
-                  ? ``
-                  : `rounded px-4 py-2 bg-indigo-800 text-white w-full flex justify-center opacity-80 cursor-not-allowed`
+                !!title && !!body ? `` : `opacity-80 cursor-not-allowed`
               }`}
               type="submit"
               disabled={!!title && !!body ? false : true}
@@ -136,9 +134,7 @@ const Task = () => {
             />
             <button
               className={`rounded px-4 py-2 bg-indigo-800 text-white w-full flex justify-center ${
-                !!title && !!body
-                  ? ``
-                  : `rounded px-4 py-2 bg-indigo-800 text-white w-full flex justify-center opacity-80 cursor-not-allowed`
+                !!title && !!body ? `` : `opacity-80 cursor-not-allowed`
               }`}
               type="submit"
               disabled={!!title && !!body ? false : true}
