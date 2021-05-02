@@ -40,7 +40,7 @@ const Task = () => {
       title: title,
       body: body,
     });
-  }, [title, body]);
+  }, [id, title, body]);
 
   useEffect(() => {
     editTodo();
@@ -50,6 +50,7 @@ const Task = () => {
     event.preventDefault();
 
     if (taskToEdit !== undefined) dispatch(updateTask(taskToEdit));
+    setId('');
     setTitle('');
     setBody('');
   };
@@ -116,12 +117,12 @@ const Task = () => {
         )}
         {taskEditFormVisibility === true && (
           <form onSubmit={handleEditTaskFromSubmit} className="mb-8 border rounded shadow-sm px-6 py-4 space-y-4">
-            <p className="text-2xl text-indigo-700 font-bold py-2 w-full">Edit Task</p>
+            <p className="text-2xl text-indigo-700 font-bold py-2 w-full">Edit Task {taskToEdit?.id}</p>
             <input
               className="border border-blue px-4 py-2 rounded w-full"
               type="text"
               id="title"
-              defaultValue={taskToEdit?.title}
+              value={title}
               placeholder="Title"
               onChange={(e) => setTitle(e.target.value)}
             />
@@ -129,11 +130,19 @@ const Task = () => {
               className="border border-blue px-4 py-2 rounded w-full"
               type="text"
               id="body"
-              defaultValue={taskToEdit?.body}
+              value={body}
               placeholder="Description"
               onChange={(e) => setBody(e.target.value)}
             />
-            <button className={`rounded px-4 py-2 bg-indigo-800 text-white w-full flex justify-center`} type="submit">
+            <button
+              className={`rounded px-4 py-2 bg-indigo-800 text-white w-full flex justify-center ${
+                !!title && !!body
+                  ? ``
+                  : `rounded px-4 py-2 bg-indigo-800 text-white w-full flex justify-center opacity-80 cursor-not-allowed`
+              }`}
+              type="submit"
+              disabled={!!title && !!body ? false : true}
+            >
               Update
             </button>
             <button
