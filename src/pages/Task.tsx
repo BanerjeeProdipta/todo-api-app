@@ -52,7 +52,7 @@ const Task = () => {
 
   const handleEditTaskFromSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-
+    toast.info('Task Updated');
     if (taskToEdit !== undefined) dispatch(updateTask(taskToEdit));
     setTaskEditFormVisibility(false);
     setId('');
@@ -176,23 +176,23 @@ const Task = () => {
             {tasks.map((task: ITask) => (
               <div
                 key={task.id}
-                onClick={() => handleChangeCompletionStatus(task)}
-                className={`p-4 border rounded cursor-pointer ${
-                  task.completionStatus === true ? 'bg-gray-100' : 'hover:shadow-lg'
-                }`}
+                className={`p-4 border rounded ${task.completionStatus === true ? 'bg-gray-100' : 'hover:shadow-lg'}`}
               >
-                <div className="flex items-center">
-                  <input
-                    className="h-4 w-4 flex-shrink-0 mb-2"
-                    type="checkbox"
-                    id="completionStatus"
-                    value={task.id}
-                    onChange={() => handleChangeCompletionStatus(task)}
-                    checked={handleCheck(task)}
-                  ></input>
-                  <p className="text-2xl font-semibold text-indigo-700 mb-2 ml-2">{task.title}</p>
+                <div className=" cursor-pointer" onClick={() => handleChangeCompletionStatus(task)}>
+                  <div className="flex items-center">
+                    <input
+                      className="h-4 w-4 flex-shrink-0 mb-2"
+                      type="checkbox"
+                      id="completionStatus"
+                      value={task.id}
+                      onChange={() => handleChangeCompletionStatus(task)}
+                      checked={handleCheck(task)}
+                    ></input>
+                    <p className="text-2xl font-semibold text-indigo-700 mb-2 ml-2">{task.title}</p>
+                  </div>
+                  <p>{task.body}</p>
                 </div>
-                <p>{task.body}</p>
+
                 <div className="space-x-2 mt-4">
                   <button
                     className="w-full sm:w-auto flex-none bg-white font-bold leading-6 text-blue-900 text-xs hover:bg-blue-900 hover:text-white px-4 border-blue-900 border-2 rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-900 focus:outline-none transition-colors duration-200"
