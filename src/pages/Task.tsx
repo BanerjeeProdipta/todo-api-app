@@ -158,7 +158,7 @@ const Task = () => {
 
         <div className="space-y-4 border rounded shadow-sm px-6 py-4 bg-white">
           {tasks.map((task: ITask) => (
-            <div key={task.id} className="p-3 border rounded hover:shadow-lg">
+            <div key={task.id} className="p-4 border rounded hover:shadow-lg">
               <div className="flex items-center">
                 <input
                   className="h-4 w-4 mb-2"
