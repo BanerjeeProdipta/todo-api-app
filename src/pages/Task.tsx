@@ -54,6 +54,7 @@ const Task = () => {
     event.preventDefault();
 
     if (taskToEdit !== undefined) dispatch(updateTask(taskToEdit));
+    setTaskEditFormVisibility(false);
     setId('');
     setTitle('');
     setBody('');
@@ -81,12 +82,18 @@ const Task = () => {
   const handleChangeCompletionStatus = (task: ITask) => {
     if (task.completionStatus === true) {
       task.completionStatus = false;
-      toast('Task status Complete');
+      toast('Task Complete');
     } else {
       task.completionStatus = true;
-      toast('Task status Incomplete');
+      toast('Task Incomplete');
     }
     dispatch(changeCompletionStatus(task));
+  };
+
+  console.log(tasks);
+
+  const handleCheck = (task: ITask): boolean => {
+    return task.completionStatus === true ? true : false;
   };
 
   return (
@@ -167,15 +174,21 @@ const Task = () => {
         {tasks.length > 0 && (
           <div className="space-y-4 border rounded shadow-sm px-6 py-4 bg-white">
             {tasks.map((task: ITask) => (
-              <div key={task.id} className="p-4 border rounded hover:shadow-lg">
+              <div
+                key={task.id}
+                onClick={() => handleChangeCompletionStatus(task)}
+                className={`p-4 border rounded cursor-pointer ${
+                  task.completionStatus === true ? 'bg-gray-100' : 'hover:shadow-lg'
+                }`}
+              >
                 <div className="flex items-center">
                   <input
-                    className="h-4 w-4 mb-2"
+                    className="h-4 w-4 flex-shrink-0 mb-2"
                     type="checkbox"
                     id="completionStatus"
                     value={task.id}
                     onChange={() => handleChangeCompletionStatus(task)}
-                    defaultChecked={task.completionStatus === true}
+                    checked={handleCheck(task)}
                   ></input>
                   <p className="text-2xl font-semibold text-indigo-700 mb-2 ml-2">{task.title}</p>
                 </div>
