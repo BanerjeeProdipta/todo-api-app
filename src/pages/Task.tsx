@@ -81,10 +81,10 @@ const Task = () => {
   const handleChangeCompletionStatus = (task: ITask) => {
     if (task.completionStatus === true) {
       task.completionStatus = false;
-      toast('Task incomplete');
+      toast('Task status Complete');
     } else {
       task.completionStatus = true;
-      toast('Task complete');
+      toast('Task status Incomplete');
     }
     dispatch(changeCompletionStatus(task));
   };
