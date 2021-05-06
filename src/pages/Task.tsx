@@ -178,7 +178,7 @@ const Task = () => {
                 key={task.id}
                 className={`p-4 border rounded ${task.completionStatus === true ? 'bg-gray-100' : 'hover:shadow-lg'}`}
               >
-                <div className=" cursor-pointer" onClick={() => handleChangeCompletionStatus(task)}>
+                <div className=" cursor-pointer">
                   <div className="flex items-center">
                     <input
                       className="h-4 w-4 flex-shrink-0 mb-2"

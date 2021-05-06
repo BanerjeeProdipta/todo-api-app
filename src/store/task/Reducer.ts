@@ -2,7 +2,8 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { ITask } from '../../types';
 import { ACTION_TYPES } from './Types';
-import { uuid } from 'uuidv4';
+import { v4 as uuid_v4 } from 'uuid';
+uuid_v4();
 
 interface ITaskReducer {
   task: ITask[];
@@ -27,7 +28,7 @@ const InitialState: ITaskReducer = {
 
 const addTask = (state: ITaskReducer, action: any): ITaskReducer => {
   const newTask: ITask = {
-    id: uuid(),
+    id: uuid_v4(),
     completionStatus: false,
     title: action.payload.title,
     body: action.payload.body,
