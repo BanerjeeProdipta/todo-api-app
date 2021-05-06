@@ -90,7 +90,9 @@ const Task = () => {
     dispatch(changeCompletionStatus(task));
   };
 
-  console.log(tasks);
+  const handleCheck = (task: ITask): boolean => {
+    return task.completionStatus === true ? true : false;
+  };
 
   return (
     <div className="mx-auto flex justify-center py-8 px-6 ">
@@ -172,17 +174,15 @@ const Task = () => {
             {tasks.map((task: ITask) => (
               <div
                 key={task.id}
-                className={`p-4 border rounded ${task.completionStatus === false ? 'bg-gray-50' : 'hover:shadow-lg'}`}
+                className={`p-4 border rounded ${task.completionStatus === true ? 'bg-gray-50' : 'hover:shadow-lg'}`}
               >
-                <div className=" cursor-pointer">
+                <div className="cursor-pointer" onClick={() => handleChangeCompletionStatus(task)}>
                   <div className="flex items-center">
                     <input
                       className="h-4 w-4 flex-shrink-0 mb-2"
                       type="checkbox"
                       id="completionStatus"
-                      value={task.id}
-                      onChange={() => handleChangeCompletionStatus(task)}
-                      defaultChecked={task.completionStatus === true}
+                      checked={handleCheck(task)}
                     ></input>
                     <p className="text-2xl font-semibold text-indigo-700 mb-2 ml-2">{task.title}</p>
                   </div>
