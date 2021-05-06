@@ -7,7 +7,7 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <div className="bg-gray-100">
+          <div className="bg-gray-100 min-h-screen">
             <Task />
           </div>
         </Route>

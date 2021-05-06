@@ -13,13 +13,13 @@ const InitialState: ITaskReducer = {
     {
       id: '1',
       completionStatus: false,
-      title: 'Post 1',
+      title: 'Task 1',
       body: 'Quisque cursus, metus vitae pharetra Nam libero tempore, cum soluta nobis est eligendi',
     },
     {
       id: '2',
       completionStatus: true,
-      title: 'Post 2',
+      title: 'Task 2',
       body: 'Harum quidem rerum facilis est et expedita distinctio quas molestias excepturi sint',
     },
   ],

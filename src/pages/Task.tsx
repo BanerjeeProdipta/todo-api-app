@@ -3,6 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IReducer } from '../store/IndexReducer';
 import { addTask, changeCompletionStatus, removeTask, updateTask } from '../store/task/Actions';
 import { IAddTask, ITask, IUpdateTask } from '../types';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure();
 
 const Task = () => {
   const dispatch = useDispatch();
@@ -28,7 +32,7 @@ const Task = () => {
 
   const handleAddTaskFromSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-
+    toast.info('Task Added');
     if (taskToAdd !== undefined) dispatch(addTask(taskToAdd));
     setTitle('');
     setBody('');
@@ -56,6 +60,7 @@ const Task = () => {
   };
 
   const deleteTask = (task: ITask) => {
+    toast.error('Task Deleted');
     if (task !== undefined) dispatch(removeTask(task));
   };
 
@@ -76,17 +81,21 @@ const Task = () => {
   const handleChangeCompletionStatus = (task: ITask) => {
     if (task.completionStatus === true) {
       task.completionStatus = false;
-    } else task.completionStatus = true;
+      toast('Task incomplete');
+    } else {
+      task.completionStatus = true;
+      toast('Task complete');
+    }
     dispatch(changeCompletionStatus(task));
   };
 
   return (
     <div className="mx-auto flex justify-center py-8 px-6 ">
-      <div>
+      <div className="w-full md:max-w-5xl">
         {taskEditFormVisibility === false && (
           <form
             onSubmit={handleAddTaskFromSubmit}
-            className="mb-6 border rounded shadow-sm px-6 py-4 space-y-4 bg-white"
+            className="mb-6 border rounded shadow-sm px-6 py-4 space-y-4 bg-white w-full"
           >
             <p className="text-2xl text-indigo-700 font-bold py-2 w-full">Add Task</p>
             <input
@@ -119,7 +128,7 @@ const Task = () => {
         {taskEditFormVisibility === true && (
           <form
             onSubmit={handleEditTaskFromSubmit}
-            className="mb-6 hover:shadow-sm border rounded shadow-sm px-6 py-4 space-y-4 bg-white"
+            className="mb-6 hover:shadow-sm border rounded shadow-sm px-6 py-4 space-y-4 bg-white w-full"
           >
             <p className="text-2xl text-indigo-700 font-bold py-2 w-full">Edit Task {taskToEdit?.id}</p>
             <input
@@ -155,40 +164,41 @@ const Task = () => {
             </button>
           </form>
         )}
+        {tasks.length > 0 && (
+          <div className="space-y-4 border rounded shadow-sm px-6 py-4 bg-white">
+            {tasks.map((task: ITask) => (
+              <div key={task.id} className="p-4 border rounded hover:shadow-lg">
+                <div className="flex items-center">
+                  <input
+                    className="h-4 w-4 mb-2"
+                    type="checkbox"
+                    id="completionStatus"
+                    value={task.id}
+                    onChange={() => handleChangeCompletionStatus(task)}
+                    defaultChecked={task.completionStatus === true}
+                  ></input>
+                  <p className="text-2xl font-semibold text-indigo-700 mb-2 ml-2">{task.title}</p>
+                </div>
+                <p>{task.body}</p>
+                <div className="space-x-2 mt-4">
+                  <button
+                    className="w-full sm:w-auto flex-none bg-white font-bold leading-6 text-blue-900 text-xs hover:bg-blue-900 hover:text-white px-4 border-blue-900 border-2 rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-900 focus:outline-none transition-colors duration-200"
+                    onClick={() => editTask(task)}
+                  >
+                    Edit
+                  </button>
 
-        <div className="space-y-4 border rounded shadow-sm px-6 py-4 bg-white">
-          {tasks.map((task: ITask) => (
-            <div key={task.id} className="p-4 border rounded hover:shadow-lg">
-              <div className="flex items-center">
-                <input
-                  className="h-4 w-4 mb-2"
-                  type="checkbox"
-                  id="completionStatus"
-                  value={task.id}
-                  onChange={() => handleChangeCompletionStatus(task)}
-                  defaultChecked={task.completionStatus === true}
-                ></input>
-                <p className="text-2xl font-semibold text-indigo-700 mb-2 ml-2">{task.title}</p>
+                  <button
+                    className="w-full sm:w-auto flex-none bg-white font-bold leading-6 text-pink-900 text-xs hover:bg-pink-900 hover:text-white px-4 border-pink-900 border-2 rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-pink-900 focus:outline-none transition-colors duration-200"
+                    onClick={() => deleteTask(task)}
+                  >
+                    delete
+                  </button>
+                </div>
               </div>
-              <p>{task.body}</p>
-              <div className="space-x-2 mt-4">
-                <button
-                  className="w-full sm:w-auto flex-none bg-white font-bold leading-6 text-blue-900 text-xs hover:bg-blue-900 hover:text-white px-4 border-blue-900 border-2 rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-900 focus:outline-none transition-colors duration-200"
-                  onClick={() => editTask(task)}
-                >
-                  Edit
-                </button>
-
-                <button
-                  className="w-full sm:w-auto flex-none bg-white font-bold leading-6 text-pink-900 text-xs hover:bg-pink-900 hover:text-white px-4 border-pink-900 border-2 rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-pink-900 focus:outline-none transition-colors duration-200"
-                  onClick={() => deleteTask(task)}
-                >
-                  delete
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
