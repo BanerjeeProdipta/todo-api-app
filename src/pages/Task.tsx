@@ -82,19 +82,15 @@ const Task = () => {
   const handleChangeCompletionStatus = (task: ITask) => {
     if (task.completionStatus === true) {
       task.completionStatus = false;
-      toast('Task Complete');
+      toast('Task Incomplete');
     } else {
       task.completionStatus = true;
-      toast('Task Incomplete');
+      toast('Task Complete');
     }
     dispatch(changeCompletionStatus(task));
   };
 
   console.log(tasks);
-
-  const handleCheck = (task: ITask): boolean => {
-    return task.completionStatus === true ? true : false;
-  };
 
   return (
     <div className="mx-auto flex justify-center py-8 px-6 ">
@@ -176,7 +172,7 @@ const Task = () => {
             {tasks.map((task: ITask) => (
               <div
                 key={task.id}
-                className={`p-4 border rounded ${task.completionStatus === true ? 'bg-gray-100' : 'hover:shadow-lg'}`}
+                className={`p-4 border rounded ${task.completionStatus === false ? 'bg-gray-50' : 'hover:shadow-lg'}`}
               >
                 <div className=" cursor-pointer">
                   <div className="flex items-center">
@@ -186,7 +182,7 @@ const Task = () => {
                       id="completionStatus"
                       value={task.id}
                       onChange={() => handleChangeCompletionStatus(task)}
-                      checked={handleCheck(task)}
+                      defaultChecked={task.completionStatus === true}
                     ></input>
                     <p className="text-2xl font-semibold text-indigo-700 mb-2 ml-2">{task.title}</p>
                   </div>
