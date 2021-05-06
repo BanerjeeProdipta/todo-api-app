@@ -86,7 +86,7 @@ const Task = () => {
         {taskEditFormVisibility === false && (
           <form
             onSubmit={handleAddTaskFromSubmit}
-            className="mb-8 border rounded shadow-sm px-6 py-4 space-y-4 bg-white"
+            className="mb-6 border rounded shadow-sm px-6 py-4 space-y-4 bg-white"
           >
             <p className="text-2xl text-indigo-700 font-bold py-2 w-full">Add Task</p>
             <input
@@ -119,7 +119,7 @@ const Task = () => {
         {taskEditFormVisibility === true && (
           <form
             onSubmit={handleEditTaskFromSubmit}
-            className="mb-8 border rounded shadow-sm px-6 py-4 space-y-4 bg-white"
+            className="mb-6 hover:shadow-sm border rounded shadow-sm px-6 py-4 space-y-4 bg-white"
           >
             <p className="text-2xl text-indigo-700 font-bold py-2 w-full">Edit Task {taskToEdit?.id}</p>
             <input
@@ -158,7 +158,7 @@ const Task = () => {
 
         <div className="space-y-4 border rounded shadow-sm px-6 py-4 bg-white">
           {tasks.map((task: ITask) => (
-            <div key={task.id}>
+            <div key={task.id} className="p-3 border rounded hover:shadow-lg">
               <div className="flex items-center">
                 <input
                   className="h-4 w-4 mb-2"
