@@ -133,7 +133,7 @@ const Task = () => {
               onChange={(e) => setBody(e.target.value)}
             />
             <button
-              className={`rounded px-4 py-2 bg-indigo-800 text-white w-full flex justify-center ${
+              className={`rounded px-4 py-2 bg-indigo-800 hover:bg-indigo-900 text-white w-full flex justify-center ${
                 !!title && !!body ? `` : `opacity-80 cursor-not-allowed`
               }`}
               type="submit"
@@ -142,7 +142,7 @@ const Task = () => {
               Update
             </button>
             <button
-              className={`rounded px-4 py-2 bg-indigo-800 text-white w-full flex justify-center mt-2`}
+              className={`rounded px-4 py-2 text-blue-900 bg-blue-100 hover:bg-blue-200 w-full flex justify-center mt-2`}
               onClick={handleCancel}
             >
               Cancel
@@ -166,11 +166,17 @@ const Task = () => {
               </div>
               <p>{task.body}</p>
               <div className="space-x-2 mt-4">
-                <button className="bg-green-600 rounded text-xs text-white px-2 py-1" onClick={() => editTask(task)}>
+                <button
+                  className="w-full sm:w-auto flex-none bg-white font-bold leading-6 text-blue-900 text-xs hover:bg-blue-900 hover:text-white px-4 border-blue-900 border-2 rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-900 focus:outline-none transition-colors duration-200"
+                  onClick={() => editTask(task)}
+                >
                   Edit
                 </button>
 
-                <button onClick={() => deleteTask(task)} className="bg-red-600 rounded text-xs text-white px-2 py-1">
+                <button
+                  className="w-full sm:w-auto flex-none bg-white font-bold leading-6 text-pink-900 text-xs hover:bg-pink-900 hover:text-white px-4 border-pink-900 border-2 rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-pink-900 focus:outline-none transition-colors duration-200"
+                  onClick={() => deleteTask(task)}
+                >
                   delete
                 </button>
               </div>
