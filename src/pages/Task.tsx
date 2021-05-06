@@ -103,7 +103,7 @@ const Task = () => {
               onChange={(e) => setBody(e.target.value)}
             />
             <button
-              className={`rounded px-4 py-2 bg-indigo-800 text-white w-full flex justify-center ${
+              className={`rounded px-4 py-2 bg-indigo-800 hover:bg-indigo-900 text-white w-full flex justify-center ${
                 !!title && !!body ? `` : `opacity-80 cursor-not-allowed`
               }`}
               type="submit"
