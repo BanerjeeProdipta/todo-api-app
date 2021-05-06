@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IReducer } from '../store/IndexReducer';
 import { addTask, changeCompletionStatus, removeTask, updateTask } from '../store/task/Actions';
 import { IAddTask, ITask, IUpdateTask } from '../types';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 toast.configure();
