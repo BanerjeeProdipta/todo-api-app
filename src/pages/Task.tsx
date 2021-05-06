@@ -81,10 +81,13 @@ const Task = () => {
   };
 
   return (
-    <div className="mx-auto flex justify-center py-8 px-6">
+    <div className="mx-auto flex justify-center py-8 px-6 ">
       <div>
         {taskEditFormVisibility === false && (
-          <form onSubmit={handleAddTaskFromSubmit} className="mb-8 border rounded shadow-sm px-6 py-4 space-y-4">
+          <form
+            onSubmit={handleAddTaskFromSubmit}
+            className="mb-8 border rounded shadow-sm px-6 py-4 space-y-4 bg-white"
+          >
             <p className="text-2xl text-indigo-700 font-bold py-2 w-full">Add Task</p>
             <input
               className="border border-blue px-4 py-2 rounded w-full"
@@ -94,9 +97,9 @@ const Task = () => {
               placeholder="Title"
               onChange={(e) => setTitle(e.target.value)}
             />
-            <input
+            <textarea
               className="border border-blue px-4 py-2 rounded w-full"
-              type="text"
+              rows={3}
               id="body"
               value={body}
               placeholder="Description"
@@ -114,7 +117,10 @@ const Task = () => {
           </form>
         )}
         {taskEditFormVisibility === true && (
-          <form onSubmit={handleEditTaskFromSubmit} className="mb-8 border rounded shadow-sm px-6 py-4 space-y-4">
+          <form
+            onSubmit={handleEditTaskFromSubmit}
+            className="mb-8 border rounded shadow-sm px-6 py-4 space-y-4 bg-white"
+          >
             <p className="text-2xl text-indigo-700 font-bold py-2 w-full">Edit Task {taskToEdit?.id}</p>
             <input
               className="border border-blue px-4 py-2 rounded w-full"
@@ -124,9 +130,9 @@ const Task = () => {
               placeholder="Title"
               onChange={(e) => setTitle(e.target.value)}
             />
-            <input
+            <textarea
               className="border border-blue px-4 py-2 rounded w-full"
-              type="text"
+              rows={3}
               id="body"
               value={body}
               placeholder="Description"
@@ -150,7 +156,7 @@ const Task = () => {
           </form>
         )}
 
-        <div className="space-y-4">
+        <div className="space-y-4 border rounded shadow-sm px-6 py-4 bg-white">
           {tasks.map((task: ITask) => (
             <div key={task.id}>
               <div className="flex items-center">
