@@ -1,83 +1,33 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IReducer } from '../store/IndexReducer';
-import { addTask, changeCompletionStatus, removeTask, updateTask } from '../store/task/Actions';
-import { IAddTask, ITask, IUpdateTask } from '../types';
+import { changeCompletionStatus, removeTask, taskToEdit } from '../store/task/Actions';
+import { ITask } from '../types';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import _AddTaskForm from './_AddTaskForm';
+import _EditTaskForm from './_EditTaskForm';
 
 toast.configure();
 
 const Task = () => {
   const dispatch = useDispatch();
-  const [taskToAdd, setTaskToAdd] = useState<IAddTask>();
-  const [id, setId] = useState<string>('');
-  const [title, setTitle] = useState<string>('');
-  const [body, setBody] = useState<string>('');
-  const [taskToEdit, setTaskToEdit] = useState<IUpdateTask>();
-  const [taskEditFormVisibility, setTaskEditFormVisibility] = useState<boolean>(false);
+  const [taskEditFormVisibility, setTaskEditFormVisibility] = useState(false);
 
-  const tasks: ITask[] = useSelector((state: IReducer) => state.taskReducer.task);
+  const tasks: ITask[] = useSelector((state: IReducer) => state.taskReducer.tasks);
 
-  const addTodo = useCallback(() => {
-    setTaskToAdd({
-      title: title,
-      body: body,
-    });
-  }, [title, body]);
-
-  useEffect(() => {
-    addTodo();
-  }, [addTodo]);
-
-  const handleAddTaskFromSubmit = (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-    toast.info('Task Added');
-    if (taskToAdd !== undefined) dispatch(addTask(taskToAdd));
-    setTitle('');
-    setBody('');
-  };
-
-  const editTodo = useCallback(() => {
-    setTaskToEdit({
-      id: id,
-      title: title,
-      body: body,
-    });
-  }, [id, title, body]);
-
-  useEffect(() => {
-    editTodo();
-  }, [editTodo]);
-
-  const handleEditTaskFromSubmit = (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-    toast.info('Task Updated');
-    if (taskToEdit !== undefined) dispatch(updateTask(taskToEdit));
-    setTaskEditFormVisibility(false);
-    setId('');
-    setTitle('');
-    setBody('');
-  };
-
-  const deleteTask = (task: ITask) => {
-    toast.error('Task Deleted');
+  const handleDeleteTask = (task: ITask) => {
     if (task !== undefined) dispatch(removeTask(task));
+    toast.error('Task Deleted');
   };
 
-  const editTask = (task: ITask) => {
+  const handleEditTask = (task: ITask) => {
+    console.log(task);
     setTaskEditFormVisibility(true);
-    setTaskToEdit(task);
-    setId(task.id);
-    setTitle(task.title);
-    setBody(task.body);
+    dispatch(taskToEdit(task));
   };
 
-  const handleCancel = () => {
-    setTaskEditFormVisibility(false);
-    setTitle('');
-    setBody('');
-  };
+  useEffect(() => {}, []);
 
   const handleChangeCompletionStatus = (task: ITask) => {
     if (task.completionStatus === true) {
@@ -97,78 +47,8 @@ const Task = () => {
   return (
     <div className="mx-auto flex justify-center py-8 px-6 ">
       <div className="w-full md:max-w-5xl">
-        {taskEditFormVisibility === false && (
-          <form
-            onSubmit={handleAddTaskFromSubmit}
-            className="mb-6 border rounded shadow-sm px-6 py-4 space-y-4 bg-white w-full"
-          >
-            <p className="text-2xl text-indigo-700 font-bold py-2 w-full">Add Task</p>
-            <input
-              className="border border-blue px-4 py-2 rounded w-full"
-              type="text"
-              id="title"
-              value={title}
-              placeholder="Title"
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            <textarea
-              className="border border-blue px-4 py-2 rounded w-full"
-              rows={3}
-              id="body"
-              value={body}
-              placeholder="Description"
-              onChange={(e) => setBody(e.target.value)}
-            />
-            <button
-              className={`rounded px-4 py-2 bg-indigo-800 hover:bg-indigo-900 text-white w-full flex justify-center ${
-                !!title && !!body ? `` : `opacity-80 cursor-not-allowed`
-              }`}
-              type="submit"
-              disabled={!!title && !!body ? false : true}
-            >
-              Save
-            </button>
-          </form>
-        )}
-        {taskEditFormVisibility === true && (
-          <form
-            onSubmit={handleEditTaskFromSubmit}
-            className="mb-6 hover:shadow-sm border rounded shadow-sm px-6 py-4 space-y-4 bg-white w-full"
-          >
-            <p className="text-2xl text-indigo-700 font-bold py-2 w-full">Edit Task {taskToEdit?.id}</p>
-            <input
-              className="border border-blue px-4 py-2 rounded w-full"
-              type="text"
-              id="title"
-              value={title}
-              placeholder="Title"
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            <textarea
-              className="border border-blue px-4 py-2 rounded w-full"
-              rows={3}
-              id="body"
-              value={body}
-              placeholder="Description"
-              onChange={(e) => setBody(e.target.value)}
-            />
-            <button
-              className={`rounded px-4 py-2 bg-indigo-800 hover:bg-indigo-900 text-white w-full flex justify-center ${
-                !!title && !!body ? `` : `opacity-80 cursor-not-allowed`
-              }`}
-              type="submit"
-              disabled={!!title && !!body ? false : true}
-            >
-              Update
-            </button>
-            <button
-              className={`rounded px-4 py-2 text-blue-900 bg-blue-100 hover:bg-blue-200 w-full flex justify-center mt-2`}
-              onClick={handleCancel}
-            >
-              Cancel
-            </button>
-          </form>
-        )}
+        {taskEditFormVisibility === false && <_AddTaskForm />}
+        {taskEditFormVisibility === true && <_EditTaskForm />}
         {tasks.length > 0 && (
           <div className="space-y-4 border rounded shadow-sm px-6 py-4 bg-white">
             {tasks.map((task: ITask) => (
@@ -183,6 +63,7 @@ const Task = () => {
                       type="checkbox"
                       id="completionStatus"
                       checked={handleCheck(task)}
+                      onChange={() => handleChangeCompletionStatus(task)}
                     ></input>
                     <p className="text-2xl font-semibold text-indigo-700 mb-2 ml-2">{task.title}</p>
                   </div>
@@ -192,14 +73,14 @@ const Task = () => {
                 <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mt-4">
                   <button
                     className="w-full sm:w-auto bg-white font-bold leading-6 text-blue-900 text-xs hover:bg-blue-900 hover:text-white px-4 border-blue-900 border-2 rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-900 focus:outline-none transition-colors duration-200"
-                    onClick={() => editTask(task)}
+                    onClick={() => handleEditTask(task)}
                   >
                     Edit
                   </button>
 
                   <button
                     className="w-full sm:w-auto bg-white font-bold leading-6 text-pink-900 text-xs hover:bg-pink-900 hover:text-white px-4 border-pink-900 border-2 rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-pink-900 focus:outline-none transition-colors duration-200"
-                    onClick={() => deleteTask(task)}
+                    onClick={() => handleDeleteTask(task)}
                   >
                     delete
                   </button>

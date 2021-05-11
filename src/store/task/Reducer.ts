@@ -6,11 +6,12 @@ import { v4 as uuid_v4 } from 'uuid';
 uuid_v4();
 
 interface ITaskReducer {
-  task: ITask[];
+  tasks: ITask[];
+  taskToEdit: ITask;
 }
 
 const InitialState: ITaskReducer = {
-  task: [
+  tasks: [
     {
       id: '1',
       completionStatus: false,
@@ -24,6 +25,7 @@ const InitialState: ITaskReducer = {
       body: 'Harum quidem rerum facilis est et expedita distinctio quas molestias excepturi sint',
     },
   ],
+  taskToEdit: { id: '', completionStatus: false, title: ' ', body: '' },
 };
 
 const addTask = (state: ITaskReducer, action: any): ITaskReducer => {
@@ -36,20 +38,51 @@ const addTask = (state: ITaskReducer, action: any): ITaskReducer => {
 
   return {
     ...state,
-    task: state.task.concat(newTask),
+    tasks: state.tasks.concat(newTask),
   };
 };
 
 const removeTask = (state: ITaskReducer, action: any): ITaskReducer => {
-  const tasks: ITask[] = state.task.filter((task) => task.id !== action.payload.id);
+  const tasks: ITask[] = state.tasks.filter((task) => task.id !== action.payload.id);
   return {
     ...state,
-    task: tasks,
+    tasks: tasks,
+  };
+};
+
+const changeCompletionStatus = (state: ITaskReducer, action: any): ITaskReducer => {
+  const tasks: ITask[] = state.tasks;
+
+  const allTask = tasks.map((v) => {
+    if (v.id === action.payload.id) {
+      v.completionStatus = action.payload.completionStatus;
+    }
+    return v;
+  });
+
+  return {
+    ...state,
+    tasks: allTask,
+  };
+};
+
+const editTask = (state: ITaskReducer, action: any): ITaskReducer => {
+  console.log('clicked');
+  const task: ITask = {
+    id: action.payload.id,
+    completionStatus: action.payload.completionStatus,
+    title: action.payload.title,
+    body: action.payload.body,
+  };
+
+  return {
+    ...state,
+    taskToEdit: action.payload,
   };
 };
 
 const updateTask = (state: ITaskReducer, action: any): ITaskReducer => {
-  const tasks: ITask[] = state.task;
+  const tasks: ITask[] = state.tasks;
 
   const allTask = tasks.map((v) => {
     if (v.id === action.payload.id) {
@@ -62,23 +95,7 @@ const updateTask = (state: ITaskReducer, action: any): ITaskReducer => {
 
   return {
     ...state,
-    task: allTask,
-  };
-};
-
-const changeCompletionStatus = (state: ITaskReducer, action: any): ITaskReducer => {
-  const tasks: ITask[] = state.task;
-
-  const allTask = tasks.map((v) => {
-    if (v.id === action.payload.id) {
-      v.completionStatus = action.payload.completionStatus;
-    }
-    return v;
-  });
-
-  return {
-    ...state,
-    task: allTask,
+    tasks: allTask,
   };
 };
 
@@ -92,6 +109,9 @@ const Reducer = (state = InitialState, action: any) => {
 
     case ACTION_TYPES.CHANGE_COMPLETION_STATUS:
       return changeCompletionStatus(state, action);
+
+    case ACTION_TYPES.EDIT_TASK:
+      return editTask(state, action);
 
     case ACTION_TYPES.UPDATE_TASK:
       return updateTask(state, action);

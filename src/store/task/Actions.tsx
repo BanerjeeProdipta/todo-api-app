@@ -1,10 +1,13 @@
-import { IAddTask, ITask, IUpdateTask } from '../../types';
+import { IAddTask, ITask } from '../../types';
 import { ACTION_TYPES } from './Types';
 
 export const addTask = (payload: IAddTask) => {
   return { type: ACTION_TYPES.ADD_TASK, payload };
 };
-export const updateTask = (payload: IUpdateTask) => {
+export const taskToEdit = (payload: ITask) => {
+  return { type: ACTION_TYPES.EDIT_TASK, payload };
+};
+export const updateTask = (payload: ITask) => {
   return { type: ACTION_TYPES.UPDATE_TASK, payload };
 };
 export const removeTask = (payload: ITask) => {
