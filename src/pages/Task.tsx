@@ -44,11 +44,19 @@ const Task = () => {
     return task.completionStatus === true ? true : false;
   };
 
+  const handleChangeTaskEditFormVisibility = (taskEditFormVisibility: boolean) => {
+    setTaskEditFormVisibility(taskEditFormVisibility);
+  };
+
+  console.log(taskEditFormVisibility);
+
   return (
     <div className="mx-auto flex justify-center py-8 px-6 ">
       <div className="w-full md:max-w-5xl">
         {taskEditFormVisibility === false && <_AddTaskForm />}
-        {taskEditFormVisibility === true && <_EditTaskForm />}
+        {taskEditFormVisibility === true && (
+          <_EditTaskForm handleChangeTaskEditFormVisibility={handleChangeTaskEditFormVisibility} />
+        )}
         {tasks.length > 0 && (
           <div className="space-y-4 border rounded shadow-sm px-6 py-4 bg-white">
             {tasks.map((task: ITask) => (

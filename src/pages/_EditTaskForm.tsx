@@ -5,7 +5,11 @@ import { IReducer } from '../store/IndexReducer';
 import { updateTask } from '../store/task/Actions';
 import { ITask } from '../types';
 
-const _EditTaskForm = () => {
+interface props {
+  handleChangeTaskEditFormVisibility: (visibility: boolean) => void;
+}
+
+const _EditTaskForm = ({ handleChangeTaskEditFormVisibility }: props) => {
   const dispatch = useDispatch();
   const [taskToEdit, setTaskToEdit] = useState<ITask | any>();
 
@@ -26,6 +30,7 @@ const _EditTaskForm = () => {
     event.preventDefault();
     if (taskToEdit !== undefined) dispatch(updateTask(taskToEdit));
     toast.info('Task Updated');
+    handleChangeTaskEditFormVisibility(false);
   };
 
   return (
@@ -51,13 +56,14 @@ const _EditTaskForm = () => {
           onChange={handleEditTodo}
         />
         <button
-          className={`rounded px-4 py-2 bg-indigo-800 hover:bg-indigo-900 text-white w-full flex justify-center`}
           type="submit"
+          className={`rounded px-4 py-2 bg-indigo-800 hover:bg-indigo-900 text-white w-full flex justify-center`}
         >
           Update
         </button>
         <button
           type="button"
+          onClick={() => handleChangeTaskEditFormVisibility(false)}
           className={`rounded px-4 py-2 text-blue-900 bg-blue-100 hover:bg-blue-200 w-full flex justify-center mt-2`}
         >
           Cancel
