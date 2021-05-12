@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { addTask } from '../store/task/Actions';
-import { IAddTask } from '../types';
+import { addTask } from '../../store/task/Actions';
+import { IAddTask } from '../../types';
 
 const initialTaskToAdd = {
   title: '',
   body: '',
 };
 
-const _AddTaskForm = () => {
+const AddTaskForm = () => {
   const dispatch = useDispatch();
   const [taskToAdd, setTaskToAdd] = useState<IAddTask | any>();
 
@@ -62,4 +62,4 @@ const _AddTaskForm = () => {
   );
 };
 
-export default _AddTaskForm;
+export default AddTaskForm;

@@ -67,14 +67,6 @@ const changeCompletionStatus = (state: ITaskReducer, action: any): ITaskReducer 
 };
 
 const editTask = (state: ITaskReducer, action: any): ITaskReducer => {
-  console.log('clicked');
-  const task: ITask = {
-    id: action.payload.id,
-    completionStatus: action.payload.completionStatus,
-    title: action.payload.title,
-    body: action.payload.body,
-  };
-
   return {
     ...state,
     taskToEdit: action.payload,

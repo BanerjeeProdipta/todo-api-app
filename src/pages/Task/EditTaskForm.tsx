@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { IReducer } from '../store/IndexReducer';
-import { updateTask } from '../store/task/Actions';
-import { ITask } from '../types';
+import { IReducer } from '../../store/IndexReducer';
+import { updateTask } from '../../store/task/Actions';
+import { ITask } from '../../types';
 
 interface props {
   handleChangeTaskEditFormVisibility: (visibility: boolean) => void;
 }
 
-const _EditTaskForm = ({ handleChangeTaskEditFormVisibility }: props) => {
+const EditTaskForm = ({ handleChangeTaskEditFormVisibility }: props) => {
   const dispatch = useDispatch();
   const [taskToEdit, setTaskToEdit] = useState<ITask | any>();
 
@@ -73,4 +73,4 @@ const _EditTaskForm = ({ handleChangeTaskEditFormVisibility }: props) => {
   );
 };
 
-export default _EditTaskForm;
+export default EditTaskForm;
