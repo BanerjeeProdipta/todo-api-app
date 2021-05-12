@@ -52,8 +52,11 @@ const AddTaskForm = () => {
           onChange={handleAddTodo}
         />
         <button
-          className={`rounded px-4 py-2 bg-indigo-800 hover:bg-indigo-900 text-white w-full flex justify-center`}
           type="submit"
+          className={`rounded px-4 py-2 bg-indigo-800 hover:bg-indigo-900 text-white w-full flex justify-center ${
+            !!taskToAdd?.title && !!taskToAdd?.body ? '' : 'cursor-not-allowed opacity-90'
+          }`}
+          disabled={!!taskToAdd?.title && !!taskToAdd?.body ? false : true}
         >
           Save
         </button>
