@@ -14,10 +14,8 @@ const Task = () => {
     setTaskEditFormVisibility(taskEditFormVisibility);
   };
 
-  console.log(taskEditFormVisibility);
-
   return (
-    <div className="mx-auto flex justify-center py-8 px-6 ">
+    <div className="mx-auto flex justify-center p-6">
       <div className="w-full md:max-w-5xl">
         {taskEditFormVisibility === false && <AddTaskForm />}
         {taskEditFormVisibility === true && (
