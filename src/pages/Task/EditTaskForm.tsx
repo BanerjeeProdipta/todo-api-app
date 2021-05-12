@@ -64,7 +64,10 @@ const EditTaskForm = ({ handleChangeTaskEditFormVisibility }: props) => {
         <button
           type="button"
           onClick={() => handleChangeTaskEditFormVisibility(false)}
-          className={`rounded px-4 py-2 text-blue-900 bg-blue-100 hover:bg-blue-200 w-full flex justify-center mt-2`}
+          className={`rounded px-4 py-2 text-blue-900 bg-blue-100 hover:bg-blue-200 w-full flex justify-center mt-2 ${
+            !!taskToEdit?.title && !!taskToEdit?.body ? '' : 'cursor-not-allowed opacity-90'
+          }`}
+          disabled={!!taskToEdit?.title && !!taskToEdit?.body ? false : true}
         >
           Cancel
         </button>
