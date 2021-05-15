@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { IReducer } from '../../store/IndexReducer';
 import { removeTask, taskToEdit, changeCompletionStatus } from '../../store/task/Actions';
 import { ITask } from '../../types';
+import { BASE_URL } from '../../components/config';
+import axios from 'axios';
+import { v4 as uuid_v4 } from 'uuid';
+uuid_v4();
 
 interface props {
   handleChangeTaskEditFormVisibility: (visibility: boolean) => void;
@@ -11,7 +15,11 @@ interface props {
 
 const TaskList = ({ handleChangeTaskEditFormVisibility }: props) => {
   const dispatch = useDispatch();
-  const tasks: ITask[] = useSelector((state: IReducer) => state.taskReducer.tasks);
+  const [tasks, setTasks] = useState<ITask[]>();
+
+  useEffect(() => {
+    axios.get(`${BASE_URL}/`).then((res) => setTasks(res.data));
+  }, []);
 
   const handleDeleteTask = (task: ITask) => {
     if (task !== undefined) dispatch(removeTask(task));
@@ -40,7 +48,7 @@ const TaskList = ({ handleChangeTaskEditFormVisibility }: props) => {
 
   return (
     <div>
-      {tasks.length > 0 && (
+      {tasks && tasks.length > 0 && (
         <div className="space-y-4 border rounded shadow-sm px-6 py-4 bg-white">
           {tasks.map((task: ITask) => (
             <div

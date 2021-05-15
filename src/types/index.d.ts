@@ -15,3 +15,7 @@ export interface IUpdateTask {
   title: string;
   body: string;
 }
+
+export interface ITaskResponse {
+  data: ITask[];
+}
