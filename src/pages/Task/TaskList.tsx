@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { IReducer } from '../../store/IndexReducer';
 import { removeTask, taskToEdit, changeCompletionStatus } from '../../store/task/Actions';
 import { ITask } from '../../types';
 import { BASE_URL } from '../../components/config';
