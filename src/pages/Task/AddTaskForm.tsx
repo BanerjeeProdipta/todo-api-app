@@ -1,16 +1,19 @@
+import axios from 'axios';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { addTask } from '../../store/task/Actions';
+
+import { BASE_URL } from '../../components/config';
+import { changeCompletionStatus } from '../../store/task/Actions';
 import { IAddTask } from '../../types';
 
 const initialTaskToAdd = {
+  id: '',
+  completionStatus: '',
   title: '',
   body: '',
 };
 
 const AddTaskForm = () => {
-  const dispatch = useDispatch();
   const [taskToAdd, setTaskToAdd] = useState<IAddTask | any>();
 
   const handleAddTodo = (e: React.FormEvent<HTMLInputElement>) => {
@@ -20,13 +23,18 @@ const AddTaskForm = () => {
     });
   };
 
-  const handleAddTaskFromSubmit = (event: { preventDefault: () => void }) => {
+  const handleAddTaskFromSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    if (taskToAdd !== undefined) dispatch(addTask(taskToAdd));
-    toast.info('Task Added');
-    setTaskToAdd({
-      ...initialTaskToAdd,
-    });
+    if (taskToAdd !== undefined)
+      try {
+        await axios.post(`${BASE_URL}/`, { taskToAdd });
+        toast.info('Task Added');
+        setTaskToAdd({
+          ...initialTaskToAdd,
+        });
+      } catch (e) {
+        toast.error(e);
+      }
   };
 
   return (
