@@ -1,10 +1,14 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-
 import { BASE_URL } from '../../components/config';
-import { changeCompletionStatus } from '../../store/task/Actions';
 import { IAddTask } from '../../types';
+import { v4 as uuid_v4 } from 'uuid';
+uuid_v4();
+
+interface props {
+  handleChangeTaskList: (lastAddedTask: string) => void;
+}
 
 const initialTaskToAdd = {
   id: '',
@@ -13,7 +17,7 @@ const initialTaskToAdd = {
   body: '',
 };
 
-const AddTaskForm = () => {
+const AddTaskForm = ({ handleChangeTaskList }: props) => {
   const [taskToAdd, setTaskToAdd] = useState<IAddTask | any>();
 
   const handleAddTodo = (e: React.FormEvent<HTMLInputElement>) => {
@@ -27,11 +31,20 @@ const AddTaskForm = () => {
     event.preventDefault();
     if (taskToAdd !== undefined)
       try {
-        await axios.post(`${BASE_URL}/`, { taskToAdd });
-        toast.info('Task Added');
-        setTaskToAdd({
-          ...initialTaskToAdd,
-        });
+        await axios
+          //Refactor API to send Object
+          .post(`${BASE_URL}`, { id: uuid_v4(), completionStatus: false, title: taskToAdd.title, body: taskToAdd.body })
+          .then((response) => {
+            console.log(response);
+            toast.info('Task Added');
+            setTaskToAdd({
+              ...initialTaskToAdd,
+            });
+            handleChangeTaskList(uuid_v4());
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       } catch (e) {
         toast.error(e);
       }

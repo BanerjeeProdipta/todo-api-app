@@ -10,15 +10,17 @@ uuid_v4();
 
 interface props {
   handleChangeTaskEditFormVisibility: (visibility: boolean) => void;
+  lastAddedTask: string;
 }
 
-const TaskList = ({ handleChangeTaskEditFormVisibility }: props) => {
+const TaskList = ({ handleChangeTaskEditFormVisibility, lastAddedTask }: props) => {
   const dispatch = useDispatch();
   const [tasks, setTasks] = useState<ITask[]>();
 
   useEffect(() => {
-    axios.get(`${BASE_URL}/`).then((res) => setTasks(res.data));
-  }, []);
+    axios.get(`${BASE_URL}`).then((res) => setTasks(res.data));
+    console.log('use effect');
+  }, [lastAddedTask]);
 
   const handleDeleteTask = (task: ITask) => {
     if (task !== undefined) dispatch(removeTask(task));
