@@ -19,7 +19,6 @@ const TaskList = ({ handleChangeTaskEditFormVisibility, lastAddedTask }: props) 
 
   useEffect(() => {
     axios.get(`${BASE_URL}`).then((res) => setTasks(res.data));
-    console.log('use effect');
   }, [lastAddedTask]);
 
   const handleDeleteTask = (task: ITask) => {
@@ -70,7 +69,7 @@ const TaskList = ({ handleChangeTaskEditFormVisibility, lastAddedTask }: props) 
                 <p>{task.body}</p>
               </div>
 
-              <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mt-4">
+              <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mt-4">
                 <button
                   className="w-full sm:w-auto bg-white font-bold leading-6 text-blue-900 text-xs hover:bg-blue-900 hover:text-white px-4 border-blue-900 border-2 rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-900 focus:outline-none transition-colors duration-200"
                   onClick={() => handleEditTask(task)}
