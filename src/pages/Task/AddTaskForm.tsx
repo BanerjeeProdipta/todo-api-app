@@ -31,16 +31,20 @@ const AddTaskForm = ({ handleChangeTaskList }: props) => {
     event.preventDefault();
     if (taskToAdd !== undefined)
       try {
+        //TODO:: Refactor API to send Object
         await axios
-          //TODO:: Refactor API to send Object
           .post(`${BASE_URL}`, { id: uuid_v4(), completionStatus: false, title: taskToAdd.title, body: taskToAdd.body })
           .then((response) => {
-            console.log(response);
-            toast.info('Task Added');
-            setTaskToAdd({
-              ...initialTaskToAdd,
-            });
-            handleChangeTaskList(uuid_v4());
+            console.log(response.data.body);
+            if (response.data.statusCode === 200) {
+              toast.info('Task Added');
+              setTaskToAdd({
+                ...initialTaskToAdd,
+              });
+              handleChangeTaskList(uuid_v4());
+            } else {
+              toast.error(response.data.body);
+            }
           })
           .catch((error) => {
             console.log(error);
