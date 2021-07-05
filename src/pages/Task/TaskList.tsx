@@ -54,13 +54,13 @@ const TaskList = ({ handleChangeTaskEditFormVisibility, lastAddedTask }: props) 
   };
 
   return (
-    <div className="space-y-4 rounded shadow-sm px-6 py-4 bg-white">
+    <div className="space-y-4 rounded border shadow-sm px-6 py-4 bg-white">
       {tasks && tasks.length > 0 ? (
         <div>
           {tasks.map((task: ITask) => (
             <div
               key={task.id}
-              className={`p-4 rounded ${task.completionStatus === true ? 'bg-gray-50' : 'hover:shadow-lg'}`}
+              className={`p-4 rounded border ${task.completionStatus === true ? 'bg-gray-50' : 'hover:shadow-lg'}`}
             >
               <div className="cursor-pointer">
                 <div className="flex items-center">

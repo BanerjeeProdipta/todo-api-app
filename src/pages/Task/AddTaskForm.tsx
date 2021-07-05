@@ -72,7 +72,7 @@ const AddTaskForm = ({ handleChangeTaskList }: props) => {
         />
         <textarea
           rows={4}
-          className="border px-4 py-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent "
+          className="border px-4 py-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent"
           id="body"
           value={taskToAdd?.body ? taskToAdd?.body : ''}
           placeholder="Description"
