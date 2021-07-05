@@ -63,7 +63,7 @@ const AddTaskForm = ({ handleChangeTaskList }: props) => {
       >
         <p className="text-2xl text-indigo-700 font-bold py-2 w-full">Add Task</p>
         <input
-          className="border border-blue px-4 py-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent"
+          className="border px-4 py-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent"
           type="text"
           id="title"
           value={taskToAdd?.title ? taskToAdd?.title : ''}
@@ -72,7 +72,7 @@ const AddTaskForm = ({ handleChangeTaskList }: props) => {
         />
         <textarea
           rows={4}
-          className="border border-blue px-4 py-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent "
+          className="border px-4 py-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent "
           id="body"
           value={taskToAdd?.body ? taskToAdd?.body : ''}
           placeholder="Description"
