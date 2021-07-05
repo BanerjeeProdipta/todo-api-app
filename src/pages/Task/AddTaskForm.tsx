@@ -20,10 +20,11 @@ const initialTaskToAdd = {
 const AddTaskForm = ({ handleChangeTaskList }: props) => {
   const [taskToAdd, setTaskToAdd] = useState<IAddTask | any>();
 
-  const handleAddTodo = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleAddTodo = (e: any) => {
+    const { id, value } = e.target;
     setTaskToAdd({
       ...taskToAdd,
-      [e.currentTarget.id]: e.currentTarget.value,
+      [id]: value,
     });
   };
 
@@ -69,7 +70,8 @@ const AddTaskForm = ({ handleChangeTaskList }: props) => {
           placeholder="Title"
           onChange={handleAddTodo}
         />
-        <input
+        <textarea
+          rows={4}
           className="border border-blue px-4 py-2 rounded w-full"
           id="body"
           value={taskToAdd?.body ? taskToAdd?.body : ''}
