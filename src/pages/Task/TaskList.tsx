@@ -98,7 +98,7 @@ const TaskList = ({ handleChangeTaskEditFormVisibility, lastAddedTask }: props) 
           ))}
         </div>
       ) : (
-        <div className="p-4 rounded bg-gray-50 h-14">{!!tasks && <p>No Tasks Found.</p>}</div>
+        <div className="p-4 rounded border bg-gray-50 h-14">{!!tasks && <p>No Tasks Found.</p>}</div>
       )}
     </div>
   );

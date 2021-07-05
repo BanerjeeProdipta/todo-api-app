@@ -19,10 +19,11 @@ const EditTaskForm = ({ handleChangeTaskEditFormVisibility }: props) => {
     setTaskToEdit(task);
   }, [task]);
 
-  const handleEditTodo = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleEditTodo = (e: any) => {
+    const { id, value } = e.target;
     setTaskToEdit({
       ...taskToEdit,
-      [e.currentTarget.id]: e.currentTarget.value,
+      [id]: value,
     });
   };
 
@@ -48,7 +49,8 @@ const EditTaskForm = ({ handleChangeTaskEditFormVisibility }: props) => {
           placeholder="Title"
           onChange={handleEditTodo}
         />
-        <input
+        <textarea
+          rows={4}
           className="border border-blue px-4 py-2 rounded w-full"
           id="body"
           value={taskToEdit?.body ? taskToEdit?.body : ''}
