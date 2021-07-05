@@ -24,13 +24,13 @@ const TaskList = ({ handleChangeTaskEditFormVisibility, lastAddedTask }: props) 
 
   const handleDeleteTask = (taskID: string) => {
     axios
-      .delete(`${BASE_URL}/${taskID}`, {
+      .delete(`${BASE_URL}${taskID}`, {
         headers: {
-          'Content-type': 'application/json',
+          'Content-Type': 'application/json',
         },
       })
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
         toast.error('Task Deleted');
       })
       .catch((err) => console.log(err));
@@ -54,9 +54,9 @@ const TaskList = ({ handleChangeTaskEditFormVisibility, lastAddedTask }: props) 
   };
 
   return (
-    <div>
-      {tasks && tasks.length > 0 && (
-        <div className="space-y-4 rounded shadow-sm px-6 py-4 bg-white">
+    <div className="space-y-4 rounded shadow-sm px-6 py-4 bg-white">
+      {tasks && tasks.length > 0 ? (
+        <div>
           {tasks.map((task: ITask) => (
             <div
               key={task.id}
@@ -97,6 +97,8 @@ const TaskList = ({ handleChangeTaskEditFormVisibility, lastAddedTask }: props) 
             </div>
           ))}
         </div>
+      ) : (
+        <div>{!!tasks && <p>No Tasks Found.</p>}</div>
       )}
     </div>
   );
